@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Rule</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <h1 style="font-size: 4.5rem;">Submit Rule</h1>
+        <div class="fixdisplay" style="padding-top: 15px;">
+            <button type="button" class="btn btn-primary" onclick="navigateToHome()">Home</button>
+        </div>
+        <div class="formbox">
+            <form method="POST">
+                {% csrf_token %}
+                <ol>
+                    <li>
+                        <label for="id_author">Who created the rule? (Author and/or Twitter Profile) <span style="color:red;">*</span></label>
+                        <input type="text" id="id_author" name="author" class="form-control" required value="{{ form.author.value|default:'' }}">
+                    </li>
+
+                    <li>
+                        <label for="id_title">Title of the rule: <span style="color:red;">*</span></label>
+                        <input type="text" id="id_title" name="title" class="form-control" required value="{{ form.title.value|default:'' }}">
+                    </li>
+
+                    <li>
+                        <label for="id_reference">Add a reference (e.g., Link to a blog post) if available:</label>
+                        <input type="url" id="id_reference" name="reference" class="form-control" placeholder="https://example.com" value="{{ form.reference.value|default:'' }}">
+                    </li>
+
+                    <li>
+                        <label for="id_description">Add a description of the rule. Questions you should answer are: What does the rule do? What are the expected results? <span style="color:red;">*</span></label>
+                        <input type="text" id="id_description" name="description" class="form-control" required value="{{ form.description.value|default:'' }}">
+                    </li>
+
+                    <li>
+                        <label for="id_rule_text">Rule: <span style="color:red;">*</span></label>
+                        <textarea id="id_rule_text" name="rule_text" class="form-control" required rows="5">{{ form.rule_text.value|default:'' }}</textarea>
+                    </li>
+
+                    <li>
+                        <label for="id_additional_info">Other things you want to add?</label>
+                        <input type="text" id="id_additional_info" name="additional_info" class="form-control" value="{{ form.additional_info.value|default:'' }}">
+                    </li>
+
+                    <li>
+                        <label for="id_tags">Malware family:</label>
+                        <input type="text" id="id_tags" name="tags" class="form-control" value="{{ form.tags.value|default:'' }}">
+                    </li>
+                </ol>
+                <div class="formsubmit">
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+        <script src="{% static 'Javascript/javascript.js' %}"></script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ...head content remains the same... -->
+    <title>Rule Details - Pingu Search</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include your custom CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">Pingu Search</h1>
+        <p class="section-subtitle">Rule Details</p>
+        <div class="fixdisplay">
+            <button type="button" class="btn btn-primary" onclick="navigateToHome()">Home</button>
+        </div>
+        <div class="details-container">
+            <!-- Rule Title -->
+            <h1 class="rule-title">{{ rule.title }}</h1>
+
+            <!-- Rule Information -->
+            <div class="rule-info">
+                <h3>Rule Information</h3>
+                <hr>
+                <p><strong>Description:</strong> {{ rule.description }}</p>
+                {% if rule.reference %}
+                <p><strong>Reference:</strong> <a href="{{ rule.reference }}">{{ rule.reference }}</a></p>
+                {% endif %}
+                {% if rule.additional_info %}
+                <p><strong>Additional Notes:</strong> {{ rule.additional_info }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Rule Display -->
+            <div class="rule-display">
+                <h3>The Rule</h3>
+                <hr>
+                <p>{{ rule.rule_text }}</p>
+            </div>
+
+            <!-- Additional Details -->
+            <div class="additional-details">
+                <h3>Additional Details</h3>
+                <hr>
+                <p><strong>Author:</strong> {{ rule.author }}</p>
+                {% if rule.tags %}
+                <p><strong>Tags:</strong> {{ rule.tags }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <script src="{% static 'Javascript/javascript.js' %}"></script>
+    </div>
+</body>
+</html>

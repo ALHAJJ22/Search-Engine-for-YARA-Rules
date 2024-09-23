@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ...head content remains the same... -->
+    <title>Pingu Search</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include your custom CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Pingu Search</h1>
+        <p>Search engine for Pingu Rules</p>
+        <div class="fixdisplay">
+            <button type="button" class="btn btn-primary" onclick="navigateToHome()">Home</button>
+        </div>
+        <br>
+        <input type="text" size="70" placeholder="Search... (e.g. User Risk, Password Change, MITRE, Device Compliance)">
+        <br>
+        <div class="button-container">
+            <button id="toggleFiltersButton" type="button" class="btn btn-info">Show Advanced Filters</button>
+        </div>
+        <!-- Filter Form -->
+        <form method="GET" id="filter-form">
+            <div id="filters" class="filters-container" style="display: none;">
+                <div class="filter-group">
+                    <label for="table">Table:</label>
+                    <select name="table" id="table">
+                        <option value="Select">Select...</option>
+                        <option value="users">users</option>
+                        <option value="OS">OS</option>
+                        <option value="Alert">Alert</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="author">Author:</label>
+                    <select name="author" id="author">
+                        <option value="Select">Select...</option>
+                        {% for author in authors %}
+                            <option value="{{ author }}" {% if author == selected_author %}selected{% endif %}>{{ author }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="tags">Keyword:</label>
+                    <select name="tags" id="tags">
+                        <option value="Select">Select...</option>
+                        {% for tag in tags %}
+                            <option value="{{ tag }}" {% if tag == selected_tag %}selected{% endif %}>{{ tag }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="operator">Operator:</label>
+                    <select name="operator" id="operator">
+                        <option value="Select">Select...</option>
+                        {% for operator in operators %}
+                            <option value="{{ operator }}" {% if operator == selected_operator %}selected{% endif %}>{{ operator }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <br>
+            <!-- Buttons for applying and resetting filters -->
+            <div class="filters-container">
+                <button type="submit" class="btn btn-info">Apply Filters</button>
+                <button type="button" class="btn btn-warning" id="resetFiltersButton" onclick="resetFilters()">Reset Filters</button>
+            </div>
+        </form>
+        <br>
+        <!-- Submit rule button -->
+        <div class="filters-container">
+            <button type="button" class="btn btn-info" onclick="navigateToForm()">Submit rule</button>
+        </div>
+        <br>
+        <!-- Display rules as boxes -->
+        <div class="databaseboxs">
+            {% for rule in rules %}
+                <div class="database-group">
+                    <a href="{% url 'details' rule.id %}" class="rule-link">
+                        <h2 class="rule-title">{{ rule.title }}</h2>
+                        <p class="rule-author">Author: <em>{{ rule.author }}</em></p>
+                        <p class="rule-release">Released: <strong>{{ rule.created_at|date:"n/j/Y" }}</strong></p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        <script src="{% static 'Javascript/javascript.js' %}"></script>
+    </div>
+</body>
+</html>
