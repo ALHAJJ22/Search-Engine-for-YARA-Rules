@@ -1,93 +1,188 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!-- ...head content remains the same... -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pingu Search</title>
-    <!-- Include Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Include your custom CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
-</head>
-<body>
-    <div class="container">
-        <h1>Pingu Search</h1>
-        <p>Search engine for Pingu Rules</p>
-        <div class="fixdisplay">
-            <button type="button" class="btn btn-primary" onclick="navigateToHome()">Home</button>
+  </head>
+  <body>
+    <div class="container py-5">
+      <div class="sub-container">
+        <h1 class="text-center mb-4">Pingu Search</h1>
+        <p class="text-center section-subtitle mb-4">Search engine for Pingu Rules</p>
+
+        <!-- Admin Panel Button -->
+        {% if user.is_authenticated %}
+        <div class="d-flex justify-content-end mb-4">
+          <a href="/admin/" class="btn btn-primary"> <i class="fas fa-cogs"></i> Admin Panel </a>
         </div>
-        <br>
-        <input type="text" size="70" placeholder="Search... (e.g. User Risk, Password Change, MITRE, Device Compliance)">
-        <br>
-        <div class="button-container">
-            <button id="toggleFiltersButton" type="button" class="btn btn-info">Show Advanced Filters</button>
+        {% endif %}
+
+        <!-- Search input with buttons -->
+        <div class="d-flex justify-content-center mb-4 search">
+          <input
+            type="text"
+            id="searchInput"
+            class="form-control form-control-lg mr-2"
+            size="70"
+            placeholder="Search... (e.g. User Risk, Password Change, MITRE, Device Compliance)"
+            onkeyup="filterRules()"
+          />
+          <button type="button" class="btn btn-info mr-2" data-toggle="modal" data-target="#filterModal">
+            <i class="fas fa-filter"></i>
+            <!-- Filter icon -->
+          </button>
+          <button type="button" class="btn btn-success" onclick="navigateToForm()">
+            <i class="fas fa-plus"></i>
+            <!-- Plus icon for Submit Rule -->
+          </button>
         </div>
-        <!-- Filter Form -->
-        <form method="GET" id="filter-form">
-            <div id="filters" class="filters-container" style="display: none;">
-                <div class="filter-group">
-                    <label for="table">Table:</label>
-                    <select name="table" id="table">
-                        <option value="Select">Select...</option>
-                        <option value="users">users</option>
-                        <option value="OS">OS</option>
-                        <option value="Alert">Alert</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="author">Author:</label>
-                    <select name="author" id="author">
-                        <option value="Select">Select...</option>
-                        {% for author in authors %}
-                            <option value="{{ author }}" {% if author == selected_author %}selected{% endif %}>{{ author }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="tags">Keyword:</label>
-                    <select name="tags" id="tags">
-                        <option value="Select">Select...</option>
-                        {% for tag in tags %}
-                            <option value="{{ tag }}" {% if tag == selected_tag %}selected{% endif %}>{{ tag }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="operator">Operator:</label>
-                    <select name="operator" id="operator">
-                        <option value="Select">Select...</option>
-                        {% for operator in operators %}
-                            <option value="{{ operator }}" {% if operator == selected_operator %}selected{% endif %}>{{ operator }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+
+        <!-- Filter Modal -->
+        <div
+          class="modal fade"
+          id="filterModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="filterModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="filterModalLabel">Advanced Filters</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form method="GET" id="filter-form">
+                    <div class="row">
+                        <div class="filter-group col-md-6">
+                            <label for="table">Table:</label>
+                            <select class="form-control" name="table" id="table">
+                                <option value="Select">Select...</option>
+                                <option value="users">users</option>
+                                <option value="OS">OS</option>
+                                <option value="Alert">Alert</option>
+                            </select>
+                        </div>
+                        <div class="filter-group col-md-6">
+                            <label for="author">Author:</label>
+                            <select class="form-control" name="author" id="author">
+                                <option value="Select">Select...</option>
+                                {% for author in authors %}
+                                    <option value="{{ author }}" {% if author == selected_author %}selected{% endif %}>{{ author }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="filter-group col-md-6">
+                            <label for="tags">Keyword:</label>
+                            <select class="form-control" name="tags" id="tags">
+                                <option value="Select">Select...</option>
+                                {% for tag in tags %}
+                                    <option value="{{ tag }}" {% if tag == selected_tag %}selected{% endif %}>{{ tag }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="filter-group col-md-6">
+                            <label for="operator">Operator:</label>
+                            <select class="form-control" name="operator" id="operator">
+                                <option value="Select">Select...</option>
+                                {% for operator in operators %}
+                                    <option value="{{ operator }}" {% if operator == selected_operator %}selected{% endif %}>{{ operator }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-info" form="filter-form">Apply Filters</button>
+                <button type="button" class="btn btn-warning" id="resetFiltersButton" onclick="resetFilters()">
+                  Reset Filters
+                </button>
+              </div>
             </div>
-            <br>
-            <!-- Buttons for applying and resetting filters -->
-            <div class="filters-container">
-                <button type="submit" class="btn btn-info">Apply Filters</button>
-                <button type="button" class="btn btn-warning" id="resetFiltersButton" onclick="resetFilters()">Reset Filters</button>
-            </div>
-        </form>
-        <br>
-        <!-- Submit rule button -->
-        <div class="filters-container">
-            <button type="button" class="btn btn-info" onclick="navigateToForm()">Submit rule</button>
+          </div>
         </div>
-        <br>
+
         <!-- Display rules as boxes -->
-        <div class="databaseboxs">
+        <div class="databaseboxs mt-5" id="rulesContainer">
+          <div class="row">
             {% for rule in rules %}
-                <div class="database-group">
-                    <a href="{% url 'details' rule.id %}" class="rule-link">
-                        <h2 class="rule-title">{{ rule.title }}</h2>
-                        <p class="rule-author">Author: <em>{{ rule.author }}</em></p>
-                        <p class="rule-release">Released: <strong>{{ rule.created_at|date:"n/j/Y" }}</strong></p>
-                    </a>
+            <div class="col-md-6 rule-item">
+              <div class="database-group p-3 mb-4">
+                <a href="{% url 'details' rule.id %}" class="rule-link text-decoration-none">
+                  <h2 class="rule-title">{{ rule.title }}</h2>
+                  <p class="rule-author">Author: <em>{{ rule.author }}</em></p>
+                  <p class="rule-release">Released: <strong>{{ rule.created_at|date:"n/j/Y" }}</strong></p>
+                </a>
+                <!-- Delete icon for authenticated users -->
+                {% if user.is_authenticated %}
+                <div class="mt-2">
+                  <!-- Delete button triggers custom modal -->
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-toggle="modal"
+                    data-target="#deleteModal"
+                    data-rule-id="{{ rule.id }}"
+                  >
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                  <a href="{% url 'edit_rule' rule.id %}" class="btn btn-warning">
+                    <i class="fas fa-edit text-white"></i>
+                  </a>
                 </div>
+                {% endif %}
+              </div>
+            </div>
             {% endfor %}
+          </div>
         </div>
-        <script src="{% static 'Javascript/javascript.js' %}"></script>
+      </div>
+
+      <!-- Custom Delete Confirmation Modal -->
+      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- Adding caution icon and making the title bold -->
+              <h5 class="modal-title" id="deleteModalLabel">
+                <i class="fas fa-exclamation-triangle text-warning"></i>
+                <!-- Caution icon -->
+                <strong> Confirm Delete</strong>
+                <!-- Bold Confirm Delete -->
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">Are you sure you want to delete this rule?</div>
+
+            <!-- Updated modal-footer with custom alignment for buttons -->
+            <div class="modal-footer d-flex justify-content-start">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <form id="deleteForm" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="{% static 'Javascript/javascript.js' %}"></script>
     </div>
-</body>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

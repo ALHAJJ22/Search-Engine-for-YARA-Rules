@@ -1,64 +1,119 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Submit Rule</title>
     <!-- Include Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
-</head>
-<body>
-    <div class="container">
-        <h1 style="font-size: 4.5rem;">Submit Rule</h1>
-        <div class="fixdisplay" style="padding-top: 15px;">
-            <button type="button" class="btn btn-primary" onclick="navigateToHome()">Home</button>
-        </div>
-        <div class="formbox">
-            <form method="POST">
-                {% csrf_token %}
-                <ol>
-                    <li>
-                        <label for="id_author">Who created the rule? (Author and/or Twitter Profile) <span style="color:red;">*</span></label>
-                        <input type="text" id="id_author" name="author" class="form-control" required value="{{ form.author.value|default:'' }}">
-                    </li>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Include Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <!-- Include your custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" />
+  </head>
+  <body>
+    <div class="container my-5 position-relative">
+      <!-- Add position-relative to the container -->
+      <!-- Home icon -->
+      <button type="button" class="home-icon" onclick="navigateToHome()">
+        <i class="fas fa-arrow-left"></i>
+        <!-- Left arrow icon -->
+      </button>
 
-                    <li>
-                        <label for="id_title">Title of the rule: <span style="color:red;">*</span></label>
-                        <input type="text" id="id_title" name="title" class="form-control" required value="{{ form.title.value|default:'' }}">
-                    </li>
+      <h1 class="text-center mb-5">Submit Rule</h1>
+      {% if not user.is_authenticated %}
 
-                    <li>
-                        <label for="id_reference">Add a reference (e.g., Link to a blog post) if available:</label>
-                        <input type="url" id="id_reference" name="reference" class="form-control" placeholder="https://example.com" value="{{ form.reference.value|default:'' }}">
-                    </li>
+      <p class="text-white px-4">
+        Please complete this form to submit your query. After you submit the form, your query will be checked and validated to
+        ensure that it runs and produces the expected results.
+      </p>
+      {% endif %}
 
-                    <li>
-                        <label for="id_description">Add a description of the rule. Questions you should answer are: What does the rule do? What are the expected results? <span style="color:red;">*</span></label>
-                        <input type="text" id="id_description" name="description" class="form-control" required value="{{ form.description.value|default:'' }}">
-                    </li>
+      <!-- Submit Rule Form -->
+      <div class="card p-4 shadow-lg">
+        <form method="POST">
+          {% csrf_token %}
 
-                    <li>
-                        <label for="id_rule_text">Rule: <span style="color:red;">*</span></label>
-                        <textarea id="id_rule_text" name="rule_text" class="form-control" required rows="5">{{ form.rule_text.value|default:'' }}</textarea>
-                    </li>
+          <div class="form-group">
+            <label for="id_author"
+              >Who created the rule? (Author and/or Twitter Profile) <span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              id="id_author"
+              name="author"
+              class="form-control"
+              required
+              value="{{ form.author.value|default:'' }}"
+            />
+          </div>
 
-                    <li>
-                        <label for="id_additional_info">Other things you want to add?</label>
-                        <input type="text" id="id_additional_info" name="additional_info" class="form-control" value="{{ form.additional_info.value|default:'' }}">
-                    </li>
+          <div class="form-group">
+            <label for="id_title">Title of the rule: <span class="text-danger">*</span></label>
+            <input
+              type="text"
+              id="id_title"
+              name="title"
+              class="form-control"
+              required
+              value="{{ form.title.value|default:'' }}"
+            />
+          </div>
 
-                    <li>
-                        <label for="id_tags">Malware family:</label>
-                        <input type="text" id="id_tags" name="tags" class="form-control" value="{{ form.tags.value|default:'' }}">
-                    </li>
-                </ol>
-                <div class="formsubmit">
-                    <input type="submit" value="Submit" class="btn btn-primary">
-                </div>
-            </form>
-        </div>
-        <script src="{% static 'Javascript/javascript.js' %}"></script>
+          <div class="form-group">
+            <label for="id_reference">Add a reference (e.g., Link to a blog post) if available:</label>
+            <input
+              type="url"
+              id="id_reference"
+              name="reference"
+              class="form-control"
+              placeholder="https://example.com"
+              value="{{ form.reference.value|default:'' }}"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="id_description"
+              >Add a description of the rule. Questions you should answer are: What does the rule do? What are the expected
+              results? <span class="text-danger">*</span></label
+            >
+            <textarea id="id_description" name="description" class="form-control" required rows="4">
+{{ form.description.value|default:'' }}</textarea
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="id_rule_text">Rule: <span class="text-danger">*</span></label>
+            <textarea id="id_rule_text" name="rule_text" class="form-control" required rows="5">
+{{ form.rule_text.value|default:'' }}</textarea
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="id_additional_info">Other things you want to add?</label>
+            <textarea id="id_additional_info" name="additional_info" class="form-control" rows="3">
+{{ form.additional_info.value|default:'' }}</textarea
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="id_tags">Malware family:</label>
+            <input type="text" id="id_tags" name="tags" class="form-control" value="{{ form.tags.value|default:'' }}" />
+          </div>
+
+          <!-- Submit Button -->
+          <div class="text-center mt-4">
+            <input type="submit" value="Submit" class="btn btn-success btn-lg px-5" />
+          </div>
+        </form>
+      </div>
     </div>
-</body>
+
+    <!-- Include your custom JS -->
+    <script src="{% static 'Javascript/javascript.js' %}"></script>
+    <!-- Include Bootstrap JS for interactivity -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
