@@ -1,154 +1,245 @@
-/* Existing CSS for other HTML pages */
-html,
 body {
-  height: 100%;
-  width: 100%;
-  background-color: #111827;
-  color: #d1d5db;
+  font-family: Arial, sans-serif;
+  background-color: #181d30;
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  margin-top: 20px;
+  max-width: 75%;
+  margin-left: auto;
 }
-
-.fixdisplay {
-  display: inline-block;
+.sub-container {
+  max-width: 100%;
+  margin-left: auto;
+  padding: 30px 15px;
 }
-
-.button-container {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-}
-
-.filters-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: 1;
-  min-width: 150px;
-}
-
-.filter-group p {
-  margin-bottom: 5px;
-}
-
-.filter-group select {
-  width: 100%;
-}
-
-.databaseboxs {
-  text-align: center;
-  width: 100%;
-}
-
-.database-group {
-  border: 2px solid red;
-  border-radius: 12px;
-  padding: 5px;
-  margin-bottom: 10px;
-}
-
-.formtitle {
-  background-color: #04fff6;
-  color: black;
-  width: 100%;
-  padding-left: 10px;
-}
-
-.formbox {
-  background-color: #04fff6;
-  color: black;
-  border: 2px solid;
-  border-radius: 12px;
-  font-size: 24px;
-  margin-top: 30px;
-}
-
-.formsubmit {
-  margin-top: 20px;
-  padding-left: 40px;
-  padding-bottom: 20px;
-}
-
-/* New CSS for the Details Page */
-.main-title {
-  font-size: 4.5rem;
-  text-align: center;
-}
-
-.section-subtitle {
-  padding-top: 15px;
-  font-size: 1.25rem;
-  font-weight: 500;
-  text-align: center;
-}
-
-.details-container {
-  margin-top: 30px;
-  background-color: #1f2937;
-  padding: 20px;
-  border-radius: 10px;
-  width: 100%;
-}
-
-.rule-title {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  text-align: center;
-  color: #04fff6;
-}
-
-.rule-info,
-.rule-display,
-.additional-details,
-.rule-summary {
-  background-color: #2d3748;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.rule-info h3,
-.rule-display h3,
-.additional-details h3,
-.rule-summary h3 {
-  color: #04fff6;
-}
-
-.rule-info p,
-.rule-display p,
-.additional-details p,
-.rule-summary p {
-  font-size: 1rem;
-  color: #d1d5db;
-}
-
-.rule-info a {
-  color: #38b2ac;
-  text-decoration: none;
-}
-
-.rule-info a:hover {
-  text-decoration: underline;
+h1 {
+  font-size: 3rem;
+  color: #dee2e6;
+  font-weight: 700;
 }
 
 hr {
-  border-top: 1px solid #4a5568;
+  border-top: 1px solid #dee2e6;
+}
+
+.text-center h1 {
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+.database-group {
+  background-color: #1f2937;
+  border: 1px solid #324354;
+  border-radius: 10px;
+  transition: box-shadow 0.3s;
+}
+
+.database-group:hover {
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  background-color: #353e4a;
+}
+
+.rule-link {
+  color: #333;
+}
+
+.rule-title {
+  text-transform: capitalize;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0056b3 !important;
+  background-color: #181d30;
+  border-radius: 20px 30px;
+  padding: 10px;
+  width: 100%;
+}
+
+.card .rule-title {
+  text-transform: capitalize;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  width: fit-content;
+}
+
+.rule-author,
+.rule-release {
+  color: #bebebe;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  border: none;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border: none;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border: none;
+}
+#filterModal .modal-header {
+  background-color: #17a2b8;
+  color: white;
+}
+#filterModal .modal-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#filterModal .modal-footer .btn {
+  margin-left: 10px;
+}
+#filterModal .form-control {
+  background-color: rgb(241, 241, 241);
+}
+
+.search .form-control {
+  background-color: #dee2e6;
+  color: #181d30;
+}
+.search .form-control:focus {
+  background-color: #dee2e6;
+}
+.card {
+  border: 4px dotted #181d30;
+  border-radius: 15px;
+  background-color: #27313f;
+}
+.bg-light {
+  background-color: #9b9b9b !important;
+  color: rgb(67, 67, 67);
+}
+.card p,
+.card label {
+  font-size: 1rem;
+  color: #cdcdcd;
+}
+
+.card input,
+.card textarea {
+  border-radius: 5px;
+}
+
+.form-control {
+  box-shadow: none;
+  background-color: rgb(25, 32, 41);
+  border: none;
+  border-left: 6px solid rgb(17, 84, 156);
+}
+
+.form-control:focus {
+  box-shadow: none;
+  background-color: rgb(25, 32, 41);
+  border: none;
+
+  border-left: 6px solid rgb(17, 84, 156);
+}
+
+.btn-primary {
+  background-color: #181d30;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.text-danger {
+  color: #dc3545 !important;
+}
+
+.main-title {
+  font-size: 3.5rem;
+  color: #dee2e6;
+  font-weight: 700;
+}
+
+.section-subtitle {
+  font-size: 1.5rem;
+  color: #7f8c8d;
+}
+
+.card h4 {
+  font-size: 1.5rem;
+  color: #f5f5f5;
+  font-weight: bold;
+}
+
+.pre {
+  font-family: "Courier New", monospace;
+  font-size: 1rem;
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.btn-primary {
+  background-color: #0056b3;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0361c6;
+}
+
+.home-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  color: #fafafa;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.home-icon:hover {
+  transform: translateX(-5px);
+}
+
+.copy-btn {
+  margin: auto;
+  border-radius: 0.25rem;
+  background-color: #27313f;
+  color: rgb(22, 99, 182);
+  border: none;
+  display: flex;
+  align-items: center;
+}
+
+.copy-btn:hover {
+  color: rgb(17, 84, 156);
+  background-color: #27313f;
+  transform: translateY(-8px);
+  transition: 0.5s;
+}
+
+.copy-btn:focus {
+  background-color: #fafafa;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.copy-btn i {
+  font-size: 2rem;
+}
+
+@media (max-width: 768px) {
+  .databaseboxs .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .text-center {
+    margin-bottom: 20px;
+  }
 }

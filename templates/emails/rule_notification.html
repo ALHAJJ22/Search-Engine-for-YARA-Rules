@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+      }
+      .container {
+        margin: 0 auto;
+        max-width: 100%;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+      }
+      .header {
+        background-color: #181d30;
+        padding: 10px;
+      }
+      h2 {
+        color: #fff;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        word-wrap: break-word;
+        word-break: break-all;
+      }
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+        width: 1px;
+        white-space: nowrap;
+      }
+      td {
+        max-width: 100%; /* Makes sure it fits inside the container */
+      }
+      .footer {
+        margin-top: 20px;
+        font-size: 0.9em;
+        color: #777;
+        padding: 0px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2>New Rule Submission</h2>
+      </div>
+
+      <table>
+        <tr>
+          <td><strong>Author</strong></td>
+          <td>{{ author }}</td>
+        </tr>
+        <tr>
+          <td><strong>Title</strong></td>
+          <td>{{ title }}</td>
+        </tr>
+        <tr>
+          <td><strong>Description</strong></td>
+          <td>{{ description }}</td>
+        </tr>
+        <tr>
+          <td><strong>Rule Text</strong></td>
+          <td>{{ rule_text }}</td>
+        </tr>
+        <tr>
+          <td><strong>Reference</strong></td>
+          <td>{{ reference }}</td>
+        </tr>
+        <tr>
+          <td><strong>Additional Information</strong></td>
+          <td>{{ additional_info }}</td>
+        </tr>
+        <tr>
+          <td><strong>Tags</strong></td>
+          <td>{{ tags }}</td>
+        </tr>
+      </table>
+
+      <div class="footer">
+        <p>This email is automatically generated. Please do not reply.</p>
+      </div>
+    </div>
+  </body>
+</html>
