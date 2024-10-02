@@ -49,7 +49,7 @@ def form_view(request):
             # Rule.objects.all().delete()
 
             subject = "New Rule Submission Notification"
-            recipient_email = "kufs96bd@gmail.com"
+            recipient_email = "proemailject@gmail.com"
             from_email = settings.EMAIL_HOST_USER
 
             # Render the email template with form data
